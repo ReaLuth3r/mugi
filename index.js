@@ -1,5 +1,5 @@
 
-// import { createBareServer } from '@tomphttp/bare-server-node';
+import { createBareServer } from '@tomphttp/bare-server-node';
 import express from 'express';
 import mime from 'mime';
 import cors from 'cors';
@@ -11,7 +11,7 @@ import http from 'node:http';
 
 const app = express();
 const server = http.createServer();
-// const bareServer = createBareServer('/bare/');
+const bareServer = createBareServer('/bare/');
 
 const port = process.env.PORT || process.argv[2] || 8080;
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -51,15 +51,15 @@ let notFoundFile = fs.readFileSync(path.join(__dirname, './pages/404.html'), 'ut
 notFoundFile = notFoundFile.replace('<body>', '<body> ' + navbar).replace('</head>', meta + '</head>');
 app.use((req, res, next) => res.status(404).send(notFoundFile));
 
-// server.on('request', (req, res) => {
-//     if (bareServer.shouldRoute(req)) bareServer.routeRequest(req, res);
-//     else app(req, res);
-// });
+server.on('request', (req, res) => {
+    if (bareServer.shouldRoute(req)) bareServer.routeRequest(req, res);
+    else app(req, res);
+});
 
-// server.on('upgrade', (req, socket, head) => {
-//     if (bareServer.shouldRoute(req)) bareServer.routeUpgrade(req, socket, head);
-//     else socket.end();
-// });
+server.on('upgrade', (req, socket, head) => {
+    if (bareServer.shouldRoute(req)) bareServer.routeUpgrade(req, socket, head);
+    else socket.end();
+});
 
 server.on('listening', () => {
     console.log(`Polaris started! http://localhost:${port}`);
