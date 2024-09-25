@@ -5,7 +5,9 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "start": "node index.js"
+        "start": "node index.js",
+        "build": "npm run build",
+        
     },
     "author": "Mugi Development Group",
     "license": "GNU-3.0-or-later",
