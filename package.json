@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "start": "node index.js",
-        "build": "npm run build",
+        "build": "npm run build"
         
     },
     "author": "Mugi Development Group",
